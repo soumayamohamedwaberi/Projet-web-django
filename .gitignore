@@ -1,0 +1,23 @@
+# created by virtualenv automatically
+# Python - Fichiers compilés
+__pycache__/
+*.py[cod]
+*$py.class
+
+.venv/
+venv/
+env/
+
+db.sqlite3
+
+.env
+local_settings.py
+
+media/
+static/
+staticfiles/
+
+.idea/
+.vscode/
+*.swp
+
