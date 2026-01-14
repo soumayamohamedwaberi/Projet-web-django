@@ -1,7 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User # On utilise l'user de base pour l'instant
+from django.contrib.auth.models import User 
 
-# 1. Version simplifiée de l'Offre (Juste pour que ça marche chez toi)
+# 1. Version simplifiée de l'Offre
 class OffreStage(models.Model):
     titre = models.CharField(max_length=200)
     entreprise = models.CharField(max_length=200, default="Entreprise Test")
@@ -18,13 +18,15 @@ class Candidature(models.Model):
         ('refusee', 'Refusée'),
     )
     
-    # Lien vers l'étudiant (User standard Django)
+    # Lien vers l'étudiant
     etudiant = models.ForeignKey(User, on_delete=models.CASCADE)
-    # Lien vers ton offre simplifiée
+    # Lien vers l'offre
     offre = models.ForeignKey(OffreStage, on_delete=models.CASCADE)
     
     lettre_motivation = models.TextField()
-    cv = models.FileField(upload_to='cvs/', blank=True, null=True)
+    
+    cv_personnalise = models.FileField(upload_to='cvs/', blank=True, null=True)
+    
     date_envoi = models.DateTimeField(auto_now_add=True)
     statut = models.CharField(max_length=20, choices=STATUTS, default='en_attente')
 
