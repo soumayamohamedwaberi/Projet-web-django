@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MyIntern'
+    'django.contrib.staticfiles',
+    'stages',  # <-- Ajoute ça
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
