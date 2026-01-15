@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('cv', models.FileField(blank=True, null=True, upload_to='cvs/')),
                 ('date_envoi', models.DateTimeField(auto_now_add=True)),
                 ('statut', models.CharField(choices=[('en_attente', 'En attente'), ('acceptee', 'Acceptée'), ('refusee', 'Refusée')], default='en_attente', max_length=20)),
-                ('etudiant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('étudiant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ('offre', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stages.offrestage')),
             ],
         ),
