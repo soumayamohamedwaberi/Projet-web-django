@@ -1,1 +1,53 @@
+{% extends "base.html" %}
 
+{% block title %}{{ offre.title }} - Détails{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'offres_list' %}">Offres</a></li>
+                <li class="breadcrumb-item active">{{ offre.title }}</li>
+            </ol>
+        </nav>
+
+        <div class="card border-0 shadow-sm p-4 mb-4">
+            <h1 class="text-primary">{{ offre.title }}</h1>
+            <p class="text-muted"><i class="bi bi-building"></i> {{ offre.company_name }} — <i class="bi bi-geo-alt"></i> {{ offre.location }}</p>
+            <hr>
+            
+            <h5 class="fw-bold">Description du poste</h5>
+            <p class="text-secondary" style="line-height: 1.8;">
+                {{ offre.description|linebreaks }}
+            </p>
+
+            <h5 class="fw-bold mt-4">Profil recherché</h5>
+            <p class="text-secondary">{{ offre.required_profile }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm p-4 sticky-top" style="top: 20px;">
+            <h5 class="mb-3">Intéressé par ce stage ?</h5>
+            <ul class="list-unstyled mb-4">
+                <li class="mb-2"><i class="bi bi-clock text-primary"></i> <strong>Durée :</strong> {{ offre.duration }}</li>
+                <li class="mb-2"><i class="bi bi-calendar-event text-primary"></i> <strong>Début :</strong> {{ offre.start_date|date:"M Y" }}</li>
+                <li class="mb-2"><i class="bi bi-cash-stack text-primary"></i> <strong>Rémunération :</strong> {{ offre.stipend|default:"À discuter" }}</li>
+            </ul>
+
+            {% if user.is_authenticated and user.is_student %}
+                <a href="#" class="btn btn-primary btn-lg w-100">Postuler maintenant</a>
+            {% elif not user.is_authenticated %}
+                <div class="alert alert-warning small">
+                    Vous devez être <a href="#">connecté</a> pour postuler.
+                </div>
+            {% endif %}
+            
+            <button class="btn btn-outline-secondary w-100 mt-2">
+                <i class="bi bi-share"></i> Partager l'offre
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
