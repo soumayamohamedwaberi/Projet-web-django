@@ -1,7 +1,8 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('stages/', include('stages.urls')),
+    path('', views.liste_offres, name='liste_offres'),
+    path('postuler/<int:offre_id>/', views.postuler, name='postuler'),
+    path('mes-candidatures/', views.mes_candidatures, name='mes_candidatures'),
 ]
