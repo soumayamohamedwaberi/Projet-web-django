@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">📢 Offres de stage disponibles</h1>
+<hr>
+
+<div class="row">
+    {% for offre in offres %}
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ offre.titre }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    {{ offre.entreprise.nom_entreprise }}
+                </h6>
+                <p class="card-text">
+                    {{ offre.description|truncatewords:20 }}
+                </p>
+
+                <!-- Personne 2 : voir détail -->
+                <a href="{% url 'detail_offre' offre.id %}" class="btn btn-outline-primary">
+                    Voir détails
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-info">
+        Aucune offre disponible.
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
