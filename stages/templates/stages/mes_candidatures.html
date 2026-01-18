@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mes Candidatures</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+    <h2>📂 Mes Candidatures</h2>
+    <a href="{% url 'liste_offres' %}" class="btn btn-outline-secondary mb-4">← Retour aux offres</a>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <table class="table table-striped shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Offre</th>
+                <th>Date</th>
+                <th>Statut</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidature in candidatures %}
+            <tr>
+                <td>{{ candidature.offre.titre }}</td>
+                <td>{{ candidature.date_candidature|date:"d/m/Y" }}</td>
+                <td>
+                    {% if candidature.statut == 'en_attente' %}
+                        <span class="badge bg-warning text-dark">En attente</span>
+                    {% elif candidature.statut == 'acceptee' %}
+                        <span class="badge bg-success">Acceptée</span>
+                    {% else %}
+                        <span class="badge bg-danger">Refusée</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if candidature.statut == 'en_attente' %}
+                        <form action="{% url 'supprimer_candidature' candidature.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous vraiment retirer cette candidature ?');">
+                                🗑️ Annuler
+                            </button>
+                        </form>
+                    {% else %}
+                        <span class="text-muted text-small">Aucune action</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">Tu n'as pas encore postulé à un stage.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

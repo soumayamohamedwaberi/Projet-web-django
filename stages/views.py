@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import OffreStage, Candidature
+from django.contrib import messages
 from .forms import CandidatureForm
 
 # Page 1 : Liste temporaire des offres (pour tester)
@@ -31,3 +32,16 @@ def postuler(request, offre_id):
 def mes_candidatures(request):
     mes_candidatures = Candidature.objects.filter(etudiant=request.user)
     return render(request, 'stages/dashboard.html', {'candidatures': mes_candidatures})
+def supprimer_candidature(request, candidature_id):
+    # On récupère la candidature UNIQUEMENT si elle appartient à l'étudiant connecté
+    candidature = get_object_or_404(Candidature, id=candidature_id, etudiant=request.user)
+    
+    if request.method == 'POST':
+        # On vérifie qu'elle n'est pas déjà traitée pour éviter les triches
+        if candidature.statut == 'en_attente':
+            candidature.delete()
+            messages.success(request, "Candidature retirée avec succès.")
+        else:
+            messages.error(request, "Impossible de supprimer une candidature déjà traitée.")
+            
+    return redirect('mes_candidatures')
