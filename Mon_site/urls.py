@@ -27,9 +27,14 @@ def home(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
+    path('stages/', include('stages.urls')),
+    path('', include('stages.urls')),
+=======
     path('',home,name= 'home'),
     path('MyIntern/', include('MyIntern.urls')),
 
+>>>>>>> 02b0d78af50005b66f217e09c16bf9cc122eff48
 ]
 
 #Servir les fichiers média en developpement

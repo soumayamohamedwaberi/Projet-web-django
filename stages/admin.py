@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+from django.contrib import admin
+from .models import OffreStage, Candidature
+
+admin.site.register(OffreStage)
+admin.site.register(Candidature)
+# Register your models here.
+=======
 # accounts/admin.py
 
 from django.contrib import admin
@@ -51,3 +59,4 @@ class ProfilEntrepriseAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('user')
+>>>>>>> 02b0d78af50005b66f217e09c16bf9cc122eff48
