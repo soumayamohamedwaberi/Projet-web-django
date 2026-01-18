@@ -1,5 +1,13 @@
 from django import forms
 from .models import Candidature
+from .models import OffreStage
+
+class OffreStageForm(forms.ModelForm):
+    class Meta:
+        model = OffreStage
+        exclude = ['entreprise', 'date_publication']
+
+
 
 class CandidatureForm(forms.ModelForm):
     class Meta:

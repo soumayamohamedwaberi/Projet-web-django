@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- templates/accounts/dashboard_entreprise.html -->
+{% extends 'base.html' %}
+
+{% block title %}Dashboard Entreprise{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="bi bi-building"></i>
+            Tableau de bord - {{ user.profil_entreprise.nom_entreprise }}
+        </h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-briefcase"></i> Offres actives
+                </h5>
+                <h2 class="mb-0">0</h2>
+                <small>Offres publiées</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-people"></i> Candidatures
+                </h5>
+                <h2 class="mb-0">0</h2>
+                <small>Candidatures reçues</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-clock"></i> À traiter
+                </h5>
+                <h2 class="mb-0">0</h2>
+                <small>En attente de réponse</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-eye"></i> Vues
+                </h5>
+                <h2 class="mb-0">0</h2>
+                <small>Vues des offres</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="bi bi-briefcase"></i> Mes offres de stage
+                </h5>
+                <a href="#" class="btn btn-light btn-sm">
+                    <i class="bi bi-plus-circle"></i> Créer une offre
+                </a>
+            </div>
+            <div class="card-body">
+                <p class="text-muted text-center py-4">
+                    Vous n'avez pas encore publié d'offre de stage.
+                    <br>
+                    <a href="#" class="btn btn-success mt-2">
+                        <i class="bi bi-plus-circle"></i> Publier votre première offre
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>
