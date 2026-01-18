@@ -1,9 +1,11 @@
-# Projet-web-GESTION DES STAGES
-Myintern est un site web permettant aux étudiants de :
-consulter des offres de stages,
-postuler en ligne,
-suivre l’état de leur candidature.
+# Plateforme de Gestion de Stages ENSA
 
-Les entreprises peuvent :
-publier des offres,
-gérer les candidatures reçues.
+Projet Django - Personne 1 : Authentification
+
+## Installation
+
+1. `git clone https://github.com/VOTRE_USERNAME/gestion-stages-ensa.git`
+2. `cd gestion-stages-ensa`
+3. `pip install -r requirements.txt`
+4. `python manage.py migrate`
+5. `python manage.py runserver`

@@ -56,7 +56,7 @@ ROOT_URLCONF = 'Mon_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,14 +99,14 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTH_USER_MODEL = 'MyIntern.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
 LANGUAGE_CODE = 'fr-fr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Casablanca'
 
 USE_I18N = True
 
@@ -117,3 +117,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR/'static']
+STATIC_ROOT = BASE_DIR/'staticfiles'
+#fichiers médias (upload)
+MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_URL = '/media/'
+
+#configuration des méssages
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+}
+
+      #URLs de redirection
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'home'
+
+DEFAULT_FROM_EMAIL = 'django.db.models.BigAutoField'
