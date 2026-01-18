@@ -1,5 +1,17 @@
 from django import forms
+<<<<<<< HEAD
 from .models import Candidature, OffreStage
+=======
+from .models import Candidature
+from .models import OffreStage
+
+class OffreStageForm(forms.ModelForm):
+    class Meta:
+        model = OffreStage
+        exclude = ['entreprise', 'date_publication']
+
+
+>>>>>>> 02b0d78af50005b66f217e09c16bf9cc122eff48
 
 # ---------------------------------------------------------
 # 1. TON FORMULAIRE (Pour les étudiants)
@@ -16,6 +28,7 @@ class CandidatureForm(forms.ModelForm):
             }),
             'cv_personnalise': forms.FileInput(attrs={'class': 'form-control'}),
         }
+<<<<<<< HEAD
     
     # Validation personnalisée pour la taille du fichier (Ton bonus)
     def clean_cv_personnalise(self):
@@ -38,3 +51,5 @@ class OffreStageForm(forms.ModelForm):
             'titre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex: Développeur Python'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
         }
+=======
+>>>>>>> 02b0d78af50005b66f217e09c16bf9cc122eff48

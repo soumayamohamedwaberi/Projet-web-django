@@ -24,9 +24,8 @@ staticfiles/
 
 =======
 # Byte-compiled / optimized / DLL files
-__pycache__/
 *.py[codz]
-*$py.class
+
 
 # C extensions
 *.so
@@ -231,4 +230,31 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+# Créer le fichier .gitignore
+```
+
+
+# Python
+*.pyc
+*.pyo
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+/media
+/staticfiles
+
+# Environnement virtuel
+
+
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
 
