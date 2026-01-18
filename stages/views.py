@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import OffreStage, Candidature
+from django.contrib import messages
 from .forms import CandidatureForm
+import csv
+from django.http import HttpResponse
 from .forms import OffreStageForm
 
 # vues CRUD offres
@@ -90,3 +93,41 @@ def postuler(request, offre_id):
 def mes_candidatures(request):
     mes_candidatures = Candidature.objects.filter(etudiant=request.user)
     return render(request, 'stages/dashboard.html', {'candidatures': mes_candidatures})
+def supprimer_candidature(request, candidature_id):
+    # On récupère la candidature UNIQUEMENT si elle appartient à l'étudiant connecté
+    candidature = get_object_or_404(Candidature, id=candidature_id, etudiant=request.user)
+    
+    if request.method == 'POST':
+        # On vérifie qu'elle n'est pas déjà traitée pour éviter les triches
+        if candidature.statut == 'en_attente':
+            candidature.delete()
+            messages.success(request, "Candidature retirée avec succès.")
+        else:
+            messages.error(request, "Impossible de supprimer une candidature déjà traitée.")
+            
+    return redirect('mes_candidatures')
+@login_required
+def export_candidatures_csv(request):
+    # On prépare la réponse "fichier à télécharger"
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="mes_candidatures.csv"'
+
+    # Création du stylo CSV
+    writer = csv.writer(response)
+    # 1. On écrit l'en-tête (les titres des colonnes)
+    writer.writerow(['Offre de stage', 'Entreprise', 'Date candidature', 'Statut', 'Lettre Motivation'])
+
+    # 2. On récupère les données de l'étudiant
+    candidatures = Candidature.objects.filter(etudiant=request.user)
+
+    # 3. On écrit chaque ligne
+    for c in candidatures:
+        writer.writerow([
+            c.offre.titre,
+            c.offre.entreprise,
+            c.date_candidature.strftime("%d/%m/%Y"), # Formatage propre de la date
+            c.get_statut_display(), # Affiche "En attente" au lieu de "en_attente"
+            c.lettre_motivation[:100] # On coupe la lettre si elle est trop longue
+        ])
+
+    return response
