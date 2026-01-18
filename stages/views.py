@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .models import OffreStage, Candidature
 from django.contrib import messages
 from .forms import CandidatureForm
+import csv
+from django.http import HttpResponse
 
 # Page 1 : Liste temporaire des offres (pour tester)
 def liste_offres(request):
@@ -45,3 +47,28 @@ def supprimer_candidature(request, candidature_id):
             messages.error(request, "Impossible de supprimer une candidature déjà traitée.")
             
     return redirect('mes_candidatures')
+@login_required
+def export_candidatures_csv(request):
+    # On prépare la réponse "fichier à télécharger"
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="mes_candidatures.csv"'
+
+    # Création du stylo CSV
+    writer = csv.writer(response)
+    # 1. On écrit l'en-tête (les titres des colonnes)
+    writer.writerow(['Offre de stage', 'Entreprise', 'Date candidature', 'Statut', 'Lettre Motivation'])
+
+    # 2. On récupère les données de l'étudiant
+    candidatures = Candidature.objects.filter(etudiant=request.user)
+
+    # 3. On écrit chaque ligne
+    for c in candidatures:
+        writer.writerow([
+            c.offre.titre,
+            c.offre.entreprise,
+            c.date_candidature.strftime("%d/%m/%Y"), # Formatage propre de la date
+            c.get_statut_display(), # Affiche "En attente" au lieu de "en_attente"
+            c.lettre_motivation[:100] # On coupe la lettre si elle est trop longue
+        ])
+
+    return response

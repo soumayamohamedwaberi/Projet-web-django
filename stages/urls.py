@@ -6,4 +6,5 @@ urlpatterns = [
     path('postuler/<int:offre_id>/', views.postuler, name='postuler'),
     path('mes-candidatures/', views.mes_candidatures, name='mes_candidatures'),
     path('supprimer/<int:candidature_id>/', views.supprimer_candidature, name='supprimer_candidature'),
+    path('export-csv/', views.export_candidatures_csv, name='export_candidatures_csv'),
 ]
