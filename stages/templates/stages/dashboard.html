@@ -1,73 +1,39 @@
-{% extends "base.html" %}
+{% extends "stages/base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Espace Recruteur : {{ user.username }}</h2>
-
-    <div>
-        <a href="{% url 'liste_offres' %}" class="btn btn-primary me-2">
-            Voir les offres
-        </a>
-
-        <a href="#" class="btn btn-success">
-            <i class="bi bi-plus-lg"></i> Publier une offre
-        </a>
+<div class="container py-5">
+    
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h2 class="fw-bold text-primary">🚀 Dernières offres de stage</h2>
+            <p class="text-muted">Trouvez votre opportunité parmi nos {{ offres.count }} offres.</p>
+        </div>
     </div>
-</div>
 
-<div class="card border-0 shadow-sm">
-    <div class="card-header bg-white py-3">
-        <h5 class="mb-0">Candidatures reçues pour vos offres</h5>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
-                <tr>
-                    <th>id</th>
-                    <th>Étudiant</th>
-                    <th>Offre</th>
-                    <th>Date d'envoi</th>
-                    <th>CV</th>
-                    <th>lettre de motivation</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cand in candidatures_recues %}
-                <tr>
-                    <td>
-                        <strong>{{ cand.student.first_name }} {{ cand.student.last_name }}</strong>
-                        <br>
-                        <small class="text-muted">
-                            {{ cand.student.studentprofile.major }}
-                        </small>
-                    </td>
-                    <td>{{ cand.internship.title }}</td>
-                    <td>{{ cand.created_at|date:"d M Y" }}</td>
-                    <td>
-                        <a href="{{ cand.cv.url }}" class="btn btn-sm btn-outline-secondary" target="_blank">
-                            <i class="bi bi-file-earmark-pdf"></i> Voir CV
-                        </a>
-                    </td>
-                    <td>
-                        <form method="POST" action="#" class="d-inline">
-                            {% csrf_token %}
-                            <button class="btn btn-sm btn-success">Accepter</button>
-                        </form>
-                        <form method="POST" action="#" class="d-inline">
-                            {% csrf_token %}
-                            <button class="btn btn-sm btn-danger">Refuser</button>
-                        </form>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="5" class="text-center py-4 text-muted">
-                        Aucune candidature reçue pour le moment.
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="row">
+        {% for offre in offres %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm border-0" style="transition: transform 0.2s;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title fw-bold text-dark">{{ offre.titre }}</h5>
+                        <span class="badge bg-light text-primary border">{{ offre.entreprise }}</span>
+                    </div>
+                    <h6 class="text-muted small mb-3">📅 {{ offre.date_publication|date:"d M Y" }}</h6>
+                    <p class="card-text text-secondary">{{ offre.description|truncatewords:20 }}</p>
+                </div>
+                <div class="card-footer bg-white border-top-0 pb-3">
+                    <div class="d-grid">
+                        <a href="{% url 'postuler' offre.id %}" class="btn btn-outline-primary">Voir & Postuler 👉</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning text-center">Aucune offre disponible pour le moment.</div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

@@ -1,101 +1,51 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postuler - {{ offre.titre }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background-color: #f8f9fa; }
-        .header-bg {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            height: 200px;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            z-index: -1;
-        }
-        .main-card {
-            margin-top: 80px;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
+{% extends 'stages/base.html' %}
 
-    <div class="header-bg"></div>
+{% block content %}
 
-    <div class="container mb-5">
+    <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8 col-md-10">
+            <div class="col-lg-8">
                 
-                <a href="{% url 'liste_offres' %}" class="text-white text-decoration-none mb-3 d-inline-block fw-bold">
+                <a href="{% url 'liste_offres' %}" class="btn btn-outline-secondary mb-3">
                     &larr; Retour aux offres
                 </a>
 
-                <div class="card main-card">
-                    <div class="card-header bg-white text-center py-4 border-bottom-0">
-                        <small class="text-uppercase text-muted fw-bold">Vous postulez pour le poste de</small>
-                        <h2 class="text-primary fw-bold my-2">{{ offre.titre }}</h2>
-                        <span class="badge bg-secondary fs-6">🏢 {{ offre.entreprise }}</span>
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="h4 mb-0">Postuler pour : {{ offre.titre }}</h2>
                     </div>
 
-                    <div class="card-body p-4 p-md-5">
-                        
-                        <div class="alert alert-light border mb-4">
-                            <strong>📝 Description du poste :</strong>
-                            <p class="text-muted mb-0 mt-1 small">
-                                {{ offre.description|linebreaksbr|truncatewords:50 }}
-                            </p>
+                    <div class="card-body">
+                        <div class="alert alert-light border">
+                            <strong>Description :</strong> {{ offre.description|truncatewords:30 }}
                         </div>
 
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             
                             {% if form.errors %}
-                                <div class="alert alert-danger">
-                                    <strong>Oups !</strong> Il y a des erreurs dans votre formulaire.
-                                </div>
+                                <div class="alert alert-danger">Il y a des erreurs dans le formulaire.</div>
                             {% endif %}
 
-                            <div class="mb-4">
-                                <label class="form-label fw-bold">Pourquoi vous ? (Lettre de motivation)</label>
-                                {{ form.lettre_motivation }} 
-                                <div class="form-text">Expliquez brièvement pourquoi ce stage est fait pour vous.</div>
-                                <div class="text-danger small">{{ form.lettre_motivation.errors }}</div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Lettre de motivation</label>
+                                {{ form.lettre_motivation }}
                             </div>
 
-                            <div class="mb-4">
-                                <label class="form-label fw-bold">Votre CV (PDF ou Word)</label>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Votre CV</label>
                                 {{ form.cv_personnalise }}
-                                <div class="form-text text-danger">⚠️ Assurez-vous que le fichier n'est pas trop lourd.</div>
-                                <div class="text-danger small">{{ form.cv_personnalise.errors }}</div>
                             </div>
 
-                            <hr class="my-4">
-
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary btn-lg fw-bold">
-                                    🚀 Envoyer ma candidature
-                                </button>
-                                <a href="{% url 'liste_offres' %}" class="btn btn-outline-secondary">
-                                    Annuler
-                                </a>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success btn-lg">Envoyer ma candidature 🚀</button>
                             </div>
                         </form>
-                        
                     </div>
-                </div>
-                
-                <div class="text-center mt-4 text-muted small">
-                    En cliquant sur envoyer, vous acceptez que vos données soient traitées dans le cadre du recrutement.
                 </div>
 
             </div>
         </div>
     </div>
 
-</body>
-</html>
+{% endblock %}

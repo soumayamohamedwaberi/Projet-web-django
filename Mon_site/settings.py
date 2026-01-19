@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-change-me-please'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -84,6 +84,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirection après connexion réussie (vers la liste des offres)
-LOGIN_REDIRECT_URL = 'liste_offres'
+LOGIN_REDIRECT_URL = 'dispatch_login'
 # Redirection après déconnexion (vers la page d'accueil/liste des offres)
 LOGOUT_REDIRECT_URL = 'liste_offres'
