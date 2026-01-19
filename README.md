@@ -1,6 +1,6 @@
 # Plateforme de Gestion de Stages ENSA
 
-Projet Django - Personne 1 : Authentification
+
 
 ## Installation
 
