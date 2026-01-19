@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion Étudiant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .card-login { width: 100%; max-width: 400px; border: none; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .btn-login { background-color: #764ba2; border: none; }
+        .btn-login:hover { background-color: #5a387e; }
+    </style>
+</head>
+<body>
+    <div class="card card-login p-4 bg-white">
+        <div class="text-center mb-4">
+            <h3>🔐 Connexion</h3>
+            <p class="text-muted">Espace Étudiant</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.errors %}
+                <div class="alert alert-danger py-2 small">Identifiant ou mot de passe incorrect.</div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Nom d'utilisateur</label>
+                <input type="text" name="username" class="form-control" required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Mot de passe</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-login btn-lg">Se connecter</button>
+            </div>
+            
+            </form>
+    </div>
+</body>
+</html>

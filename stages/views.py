@@ -51,3 +51,19 @@ def export_candidatures_csv(request):
         writer.writerow([c.offre.titre, c.offre.entreprise, c.date_candidature, c.lettre_motivation])
         
     return response
+# stages/views.py (Ajoute ça tout en bas)
+
+from django.views.decorators.http import require_POST
+
+@login_required
+@require_POST  # Sécurité : on n'accepte que les requêtes POST (pas de suppression par simple lien)
+def supprimer_candidature(request, candidature_id):
+    # On récupère la candidature, mais SEULEMENT si elle appartient à l'utilisateur connecté
+    candidature = get_object_or_404(Candidature, id=candidature_id, etudiant=request.user)
+    
+    # On vérifie si le statut permet la suppression (optionnel, mais mieux)
+    if candidature.statut == 'en_attente':
+        candidature.delete()
+        # On peut ajouter un message de succès ici si tu veux plus tard
+    
+    return redirect('mes_candidatures')
