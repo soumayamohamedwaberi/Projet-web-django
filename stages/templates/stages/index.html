@@ -1,43 +1,187 @@
-{% extends "base.html" %}
+{% extends "stages/base.html" %}
+{% load static %}
 
-{% block title %}Accueil - Plateforme de Stages{% endblock %}
+{% block title %}Accueil - Plateforme de Stages ENSA{% endblock %}
 
 {% block content %}
-<div class="row align-items-center">
-    <div class="col-md-6">
-        <h1 class="display-4 fw-bold">Propulsez votre carrière avec un stage </h1>
-        <p class="lead text-muted">La plateforme officielle pour mettre en relation les talents de l'ENSA et les meilleures entreprises.Afin d'acquérir plus d'expérience, et Surtout enrichir votre savoir faire technique.</p>
-        <div class="mt-4">
-            <a href="#" class="btn btn-primary btn-lg px-4">Je cherche un stage</a>
-            <a href="#" class="btn btn-outline-secondary btn-lg px-4 ms-2">Je suis une entreprise</a>
+
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h1 class="display-4 fw-bold text-dark">Trouvez votre stage <br><span class="text-primary">idéal</span></h1>
+            <p class="lead text-muted mt-3 mb-4">
+                La plateforme qui connecte les étudiants de l'ENSA avec les meilleures opportunités de stage.
+            </p>
+            <div class="d-flex gap-3">
+                <a href="{% url 'choix_inscription' %}" class="btn btn-primary btn-lg px-4">
+                    <i class="bi bi-person-plus"></i> S'inscrire
+                </a>
+                
+                <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-lg px-4">
+                    <i class="bi bi-box-arrow-in-right"></i> Se connecter
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="col-md-6 text-center">
-        <img src="https://img.freepik.com/free-vector/job-interview-concept-illustration_114360-1677.jpg" alt="Stages" class="img-fluid rounded shadow">
+        <div class="col-lg-6 text-center mt-4 mt-lg-0">
+            <img src="https://img.freepik.com/free-vector/job-interview-concept-illustration_114360-1677.jpg" 
+                 alt="Illustration Stage" class="img-fluid rounded" style="max-height: 400px;">
+        </div>
     </div>
 </div>
 
-<div class="row mt-5">
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <i class="bi bi-search fs-1 text-primary"></i>
-            <h4 class="mt-3">Recherche Facile</h4>
-            <p class="text-muted">Filtrez les offres par domaine, ville ou durée.</p>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <i class="bi bi-send-check fs-1 text-success"></i>
-            <h4 class="mt-3">Postulation Rapide</h4>
-            <p class="text-muted">Envoyez votre CV directement aux recruteurs.</p>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <i class="bi bi-graph-up-arrow fs-1 text-warning"></i>
-            <h4 class="mt-3">Suivi en Temps Réel</h4>
-            <p class="text-muted">Consultez l'état de vos candidatures sur votre dashboard.</p>
+<div class="bg-light py-5 mt-5">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-5">Comment ça marche ?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="p-3 card h-100 border-0 shadow-sm bg-white">
+                    <div class="card-body">
+                        <i class="bi bi-search display-4 text-primary mb-3"></i>
+                        <h4 class="fw-bold">1. Recherchez</h4>
+                        <p class="text-muted">Parcourez des centaines d'offres de stage dans tous les domaines : informatique, génie civil, et plus encore.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 card h-100 border-0 shadow-sm bg-white">
+                    <div class="card-body">
+                        <i class="bi bi-send display-4 text-primary mb-3"></i>
+                        <h4 class="fw-bold">2. Postulez</h4>
+                        <p class="text-muted">Candidatez facilement en quelques clics avec votre CV et votre lettre de motivation personnalisée.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 card h-100 border-0 shadow-sm bg-white">
+                    <div class="card-body">
+                        <i class="bi bi-trophy display-4 text-primary mb-3"></i>
+                        <h4 class="fw-bold">3. Réussissez</h4>
+                        <p class="text-muted">Décrochez le stage qui lancera votre carrière professionnelle et développez vos compétences.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="container py-5">
+    <h2 class="text-center fw-bold mb-5">La plateforme en chiffres</h2>
+    <div class="row text-center">
+        <div class="col-6 col-md-3 mb-4">
+            <h2 class="text-primary fw-bold display-5">500+</h2>
+            <p class="text-muted fw-bold">Offres de stage</p>
+        </div>
+        <div class="col-6 col-md-3 mb-4">
+            <h2 class="text-primary fw-bold display-5">1000+</h2>
+            <p class="text-muted fw-bold">Étudiants inscrits</p>
+        </div>
+        <div class="col-6 col-md-3 mb-4">
+            <h2 class="text-primary fw-bold display-5">200+</h2>
+            <p class="text-muted fw-bold">Entreprises partenaires</p>
+        </div>
+        <div class="col-6 col-md-3 mb-4">
+            <h2 class="text-primary fw-bold display-5">85%</h2>
+            <p class="text-muted fw-bold">Taux de placement</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-5">Pour qui sommes-nous ?</h2>
+        <div class="row g-4 justify-content-center">
+            
+            <div class="col-md-5">
+                <div class="card h-100 border-primary shadow-sm p-4">
+                    <div class="text-center mb-3">
+                        <i class="bi bi-mortarboard-fill text-primary display-3"></i>
+                        <h3 class="mt-2">Pour les Étudiants</h3>
+                    </div>
+                    <ul class="list-unstyled text-secondary space-y-2">
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Accès à des centaines d'offres</li>
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Candidature simplifiée en ligne</li>
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Suivi en temps réel</li>
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Profil professionnel avec CV</li>
+                    </ul>
+                    <div class="text-center mt-auto pt-3">
+                        <a href="{% url 'inscription_etudiant' %}" class="btn btn-primary w-100 rounded-pill">
+                            <i class="bi bi-pencil-square"></i> Inscription Étudiant
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card h-100 border-success shadow-sm p-4">
+                    <div class="text-center mb-3">
+                        <i class="bi bi-building text-success display-3"></i>
+                        <h3 class="mt-2">Pour les Entreprises</h3>
+                    </div>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Publication illimitée d'offres</li>
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Accès aux meilleurs talents</li>
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Gestion centralisée des candidats</li>
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Statistiques et analyses</li>
+                    </ul>
+                    <div class="text-center mt-auto pt-3">
+                        <a href="{% url 'inscription_entreprise' %}" class="btn btn-outline-success w-100 rounded-pill">
+                            <i class="bi bi-briefcase"></i> Inscription Entreprise
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container py-5 mb-5">
+    <h2 class="text-center fw-bold mb-5">Domaines populaires</h2>
+    <div class="row text-center g-4">
+        <div class="col-6 col-md-3">
+            <div class="p-3 border rounded bg-white shadow-sm h-100 hover-card">
+                <i class="bi bi-laptop display-6 text-primary"></i>
+                <h5 class="mt-3">Informatique</h5>
+                <small class="text-muted">150+ offres</small>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="p-3 border rounded bg-white shadow-sm h-100 hover-card">
+                <i class="bi bi-cpu display-6 text-danger"></i>
+                <h5 class="mt-3">Électronique</h5>
+                <small class="text-muted">80+ offres</small>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="p-3 border rounded bg-white shadow-sm h-100 hover-card">
+                <i class="bi bi-buildings display-6 text-warning"></i>
+                <h5 class="mt-3">Génie Civil</h5>
+                <small class="text-muted">95+ offres</small>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="p-3 border rounded bg-white shadow-sm h-100 hover-card">
+                <i class="bi bi-gear-wide-connected display-6 text-secondary"></i>
+                <h5 class="mt-3">Mécanique</h5>
+                <small class="text-muted">60+ offres</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-primary text-white text-center py-5">
+    <div class="container">
+        <h2 class="fw-bold">Prêt à commencer ?</h2>
+        <p class="lead mb-4">Rejoignez des milliers d'étudiants et d'entreprises qui nous font confiance.</p>
+        <a href="{% url 'choix_inscription' %}" class="btn btn-light btn-lg text-primary fw-bold">
+            Créer mon compte gratuitement
+        </a>
+    </div>
+</div>
+
+<style>
+    .hover-card { transition: transform 0.3s ease; }
+    .hover-card:hover { transform: translateY(-5px); cursor: pointer; }
+</style>
+
 {% endblock %}

@@ -1,0 +1,57 @@
+{% extends "stages/base.html" %}
+
+{% block title %}Inscription - Choisissez votre profil{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h2 class="text-center mb-5 fw-bold">Créez votre compte</h2>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100 border-primary shadow-sm hover-card">
+                        <div class="card-body text-center p-5">
+                            <i class="bi bi-mortarboard-fill display-1 text-primary mb-4"></i>
+                            <h3 class="card-title mb-3">Je suis Étudiant</h3>
+                            <p class="card-text text-muted mb-4">
+                                Accédez aux offres de stage, postulez facilement et gérez vos candidatures.
+                            </p>
+                            <a href="{% url 'inscription_etudiant' %}" class="btn btn-primary btn-lg w-100">
+                                S'inscrire comme Étudiant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100 border-success shadow-sm hover-card">
+                        <div class="card-body text-center p-5">
+                            <i class="bi bi-building display-1 text-success mb-4"></i>
+                            <h3 class="card-title mb-3">Je suis une Entreprise</h3>
+                            <p class="card-text text-muted mb-4">
+                                Publiez vos offres de stage et trouvez les meilleurs talents de l'ENSA.
+                            </p>
+                            <a href="{% url 'inscription_entreprise' %}" class="btn btn-success btn-lg w-100">
+                                S'inscrire comme Entreprise
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <p class="text-muted">
+                    Vous avez déjà un compte ?
+                    <a href="{% url 'login' %}" class="fw-bold text-decoration-none">Connectez-vous ici</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-card { transition: transform 0.3s; }
+    .hover-card:hover { transform: translateY(-5px); }
+</style>
+{% endblock %}
