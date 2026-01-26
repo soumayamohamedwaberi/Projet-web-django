@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group  # 👈 IMPORT IMPORTANT POUR LES GROUPES
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 import csv
@@ -9,15 +10,14 @@ import csv
 from .models import OffreStage, Candidature
 from .forms import CandidatureForm, StudentRegistrationForm, CompanyRegistrationForm
 
-# --- PAGE D'ACCUEIL ---
+# --- 1. ACCUEIL & CHOIX ---
 def accueil(request):
     return render(request, 'stages/index.html')
 
-# --- PAGE DE CHOIX (NOUVEAU) ---
 def choix_inscription(request):
     return render(request, 'stages/choix_inscription.html')
 
-# --- INSCRIPTIONS ---
+# --- 2. INSCRIPTIONS (AVEC ÉTIQUETAGE GROUPE) ---
 def inscription_etudiant(request):
     if request.method == 'POST':
         form = StudentRegistrationForm(request.POST)
@@ -25,9 +25,14 @@ def inscription_etudiant(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
+            
+            # 👇 ON LUI COLLE L'ÉTIQUETTE "ETUDIANT"
+            group, created = Group.objects.get_or_create(name='Etudiant')
+            user.groups.add(group)
+            
             login(request, user)
             messages.success(request, "Compte étudiant créé !")
-            return redirect('liste_offres')
+            return redirect('liste_offres') # L'étudiant va aux offres
     else:
         form = StudentRegistrationForm()
     return render(request, 'stages/inscription_etudiant.html', {'form': form})
@@ -39,18 +44,45 @@ def inscription_entreprise(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
+            
+            # 👇 ON LUI COLLE L'ÉTIQUETTE "ENTREPRISE"
+            group, created = Group.objects.get_or_create(name='Entreprise')
+            user.groups.add(group)
+            
             login(request, user)
             messages.success(request, "Compte entreprise créé !")
-            return redirect('liste_offres') # Ou un dashboard entreprise
+            
+            # 👇 REDIRECTION VERS LE DASHBOARD ENTREPRISE
+            return redirect('dashboard_entreprise') 
     else:
         form = CompanyRegistrationForm()
     return render(request, 'stages/inscription_entreprise.html', {'form': form})
 
-# --- OFFRES & CANDIDATURES ---
+# --- 3. AIGUILLAGE INTELLIGENT (LOGIN) ---
+@login_required
+def dispatch_login(request):
+    # Si c'est un Admin
+    if request.user.is_superuser or request.user.is_staff:
+        return redirect('/admin/')
+    
+    # 👇 Si c'est une Entreprise (on vérifie l'étiquette)
+    if request.user.groups.filter(name='Entreprise').exists():
+        return redirect('dashboard_entreprise')
+    
+    # Sinon, c'est un étudiant (par défaut)
+    return redirect('liste_offres')
+
+# --- 4. DASHBOARDS ---
+@login_required
+def dashboard_entreprise(request):
+    # On affiche le tableau de bord recruteur
+    return render(request, 'stages/dashboard_entreprise.html')
+
 def liste_offres(request):
     offres = OffreStage.objects.all().order_by('-date_publication')
     return render(request, 'stages/dashboard.html', {'offres': offres})
 
+# --- 5. CANDIDATURES ---
 @login_required
 def postuler(request, offre_id):
     offre = get_object_or_404(OffreStage, id=offre_id)
@@ -96,9 +128,3 @@ def export_candidatures_csv(request):
     for c in Candidature.objects.filter(etudiant=request.user):
         writer.writerow([c.offre.titre, c.offre.entreprise, c.date_candidature, c.statut])
     return response
-
-@login_required
-def dispatch_login(request):
-    if request.user.is_superuser or request.user.is_staff:
-        return redirect('/admin/')
-    return redirect('liste_offres')

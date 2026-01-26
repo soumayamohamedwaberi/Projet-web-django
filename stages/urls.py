@@ -19,4 +19,5 @@ urlpatterns = [
     path('mes-candidatures/csv/', views.export_candidatures_csv, name='export_candidatures_csv'),
     path('supprimer/<int:candidature_id>/', views.supprimer_candidature, name='supprimer_candidature'),
     path('redirect-login/', views.dispatch_login, name='dispatch_login'),
+    path('entreprise/dashboard/', views.dashboard_entreprise, name='dashboard_entreprise'),
 ]

@@ -1,0 +1,69 @@
+{% extends "stages/base.html" %}
+
+{% block title %}Espace Entreprise{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            <i class="bi bi-building"></i> Tableau de bord Entreprise
+        </h2>
+        <a href="#" class="btn btn-success">
+            <i class="bi bi-plus-lg"></i> Créer une nouvelle offre
+        </a>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title mb-0">Offres actives</h6>
+                            <h2 class="my-2">0</h2>
+                        </div>
+                        <i class="bi bi-briefcase fs-1 opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title mb-0">Candidatures</h6>
+                            <h2 class="my-2">0</h2>
+                        </div>
+                        <i class="bi bi-people fs-1 opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title mb-0">En attente</h6>
+                            <h2 class="my-2">0</h2>
+                        </div>
+                        <i class="bi bi-clock fs-1 opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Mes offres de stage</h5>
+        </div>
+        <div class="card-body text-center py-5">
+            <i class="bi bi-folder2-open display-1 text-muted mb-3"></i>
+            <p class="text-muted">Vous n'avez pas encore publié d'offre.</p>
+            <button class="btn btn-outline-primary">Publier ma première offre</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
