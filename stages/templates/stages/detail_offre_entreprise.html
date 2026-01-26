@@ -1,0 +1,98 @@
+{% extends "stages/base.html" %}
+
+{% block title %}Détails de l'offre{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <a href="{% url 'dashboard_entreprise' %}" class="btn btn-outline-secondary mb-4">
+        <i class="bi bi-arrow-left"></i> Retour au tableau de bord
+    </a>
+
+    <div class="card shadow-sm mb-5">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">{{ offre.titre }}</h4>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">Publié le {{ offre.date_publication|date:"d M Y" }}</p>
+            <h5 class="fw-bold">Description :</h5>
+            <p>{{ offre.description|linebreaks }}</p>
+        </div>
+    </div>
+
+    <h3 class="mb-4"><i class="bi bi-people"></i> Candidatures reçues ({{ candidatures.count }})</h3>
+
+    {% if candidatures %}
+    <div class="table-responsive">
+        <table class="table table-hover bg-white shadow-sm rounded align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Étudiant</th>
+                    <th>Date</th>
+                    <th>Documents</th>
+                    <th>Statut Actuel</th>
+                    <th>Décision</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cand in candidatures %}
+                <tr>
+                    <td class="fw-bold">{{ cand.etudiant.first_name }} {{ cand.etudiant.last_name }}</td>
+                    <td>{{ cand.date_candidature|date:"d M Y" }}</td>
+                    <td>
+                        {% if cand.cv %}
+                        <a href="{{ cand.cv.url }}" target="_blank" class="btn btn-sm btn-outline-danger mb-1">
+                            <i class="bi bi-file-pdf"></i> CV
+                        </a>
+                        {% endif %}
+                        
+                        <button type="button" class="btn btn-sm btn-outline-info mb-1" data-bs-toggle="modal" data-bs-target="#modalLettre{{ cand.id }}">
+                            <i class="bi bi-file-text"></i> Lettre
+                        </button>
+
+                        <div class="modal fade" id="modalLettre{{ cand.id }}" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Lettre de motivation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ cand.lettre_motivation|linebreaks }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        {% if cand.statut == 'accepte' %}
+                            <span class="badge bg-success">Accepté</span>
+                        {% elif cand.statut == 'refuse' %}
+                            <span class="badge bg-danger">Refusé</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">En attente</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if cand.statut == 'en_attente' %}
+                            <a href="{% url 'accepter_candidature' cand.id %}" class="btn btn-sm btn-success" title="Accepter">
+                                <i class="bi bi-check-lg"></i>
+                            </a>
+                            <a href="{% url 'refuser_candidature' cand.id %}" class="btn btn-sm btn-danger" title="Refuser">
+                                <i class="bi bi-x-lg"></i>
+                            </a>
+                        {% else %}
+                            <span class="text-muted small">Traité</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        Aucun candidat n'a encore postulé à cette offre.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

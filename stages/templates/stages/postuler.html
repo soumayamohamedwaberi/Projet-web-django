@@ -1,51 +1,43 @@
-{% extends 'stages/base.html' %}
+{% extends "stages/base.html" %}
 
 {% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <a href="{% url 'liste_offres' %}" class="btn btn-outline-secondary mb-4">
+                ← Retour aux offres
+            </a>
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                
-                <a href="{% url 'liste_offres' %}" class="btn btn-outline-secondary mb-3">
-                    &larr; Retour aux offres
-                </a>
-
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h2 class="h4 mb-0">Postuler pour : {{ offre.titre }}</h2>
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Postuler pour : {{ offre.titre }}</h4>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <div class="alert alert-light border mb-4">
+                        <strong>Description :</strong> {{ offre.description }}
                     </div>
 
-                    <div class="card-body">
-                        <div class="alert alert-light border">
-                            <strong>Description :</strong> {{ offre.description|truncatewords:30 }}
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Lettre de motivation</label>
+                            {{ form.lettre_motivation }}
                         </div>
 
-                        <form method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            
-                            {% if form.errors %}
-                                <div class="alert alert-danger">Il y a des erreurs dans le formulaire.</div>
-                            {% endif %}
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Votre CV (PDF)</label>
+                            {{ form.cv }}
+                        </div>
 
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Lettre de motivation</label>
-                                {{ form.lettre_motivation }}
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Votre CV</label>
-                                {{ form.cv_personnalise }}
-                            </div>
-
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-success btn-lg">Envoyer ma candidature 🚀</button>
-                            </div>
-                        </form>
-                    </div>
+                        <button type="submit" class="btn btn-success w-100 btn-lg">
+                            Envoyer ma candidature 🚀
+                        </button>
+                    </form>
                 </div>
-
             </div>
         </div>
     </div>
-
+</div>
 {% endblock %}

@@ -1,0 +1,32 @@
+{% extends "stages/base.html" %}
+
+{% block title %}Publier une offre{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="bi bi-briefcase"></i> Nouvelle Offre de Stage</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Titre du poste</label>
+                            {{ form.titre }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description du stage</label>
+                            {{ form.description }}
+                        </div>
+                        <button type="submit" class="btn btn-success">Publier l'offre</button>
+                        <a href="{% url 'dashboard_entreprise' %}" class="btn btn-outline-secondary">Annuler</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

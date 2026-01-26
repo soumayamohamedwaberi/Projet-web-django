@@ -20,4 +20,12 @@ urlpatterns = [
     path('supprimer/<int:candidature_id>/', views.supprimer_candidature, name='supprimer_candidature'),
     path('redirect-login/', views.dispatch_login, name='dispatch_login'),
     path('entreprise/dashboard/', views.dashboard_entreprise, name='dashboard_entreprise'),
+    path('offre/creer/', views.creer_offre, name='creer_offre'),
+    # ... tes autres lignes ...
+    path('offre/voir/<int:offre_id>/', views.voir_offre, name='voir_offre'),
+    path('offre/supprimer/<int:offre_id>/', views.supprimer_offre, name='supprimer_offre'),
+    # ... autres urls ...
+    path('candidature/accepter/<int:candidature_id>/', views.accepter_candidature, name='accepter_candidature'),
+    path('candidature/refuser/<int:candidature_id>/', views.refuser_candidature, name='refuser_candidature'),
+
 ]

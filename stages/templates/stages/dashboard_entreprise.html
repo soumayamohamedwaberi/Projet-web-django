@@ -1,26 +1,27 @@
 {% extends "stages/base.html" %}
+{% load static %}
 
 {% block title %}Espace Entreprise{% endblock %}
 
 {% block content %}
-<div class="container py-4">
+<div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>
-            <i class="bi bi-building"></i> Tableau de bord Entreprise
+            <i class="bi bi-building"></i> Tableau de bord : <span class="text-primary">{{ user.username }}</span>
         </h2>
-        <a href="#" class="btn btn-success">
+        <a href="{% url 'creer_offre' %}" class="btn btn-success shadow-sm">
             <i class="bi bi-plus-lg"></i> Créer une nouvelle offre
         </a>
     </div>
 
     <div class="row mb-4">
         <div class="col-md-3">
-            <div class="card text-white bg-primary h-100">
+            <div class="card text-white bg-primary h-100 shadow-sm border-0">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="card-title mb-0">Offres actives</h6>
-                            <h2 class="my-2">0</h2>
+                            <h2 class="my-2 fw-bold">{{ nb_offres }}</h2>
                         </div>
                         <i class="bi bi-briefcase fs-1 opacity-50"></i>
                     </div>
@@ -28,12 +29,12 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card text-white bg-success h-100">
+            <div class="card text-white bg-success h-100 shadow-sm border-0">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="card-title mb-0">Candidatures</h6>
-                            <h2 class="my-2">0</h2>
+                            <h2 class="my-2 fw-bold">{{ nb_candidatures }}</h2>
                         </div>
                         <i class="bi bi-people fs-1 opacity-50"></i>
                     </div>
@@ -41,12 +42,12 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card text-white bg-warning h-100">
+            <div class="card text-white bg-warning h-100 shadow-sm border-0">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="card-title mb-0">En attente</h6>
-                            <h2 class="my-2">0</h2>
+                            <h2 class="my-2 fw-bold">{{ nb_en_attente }}</h2>
                         </div>
                         <i class="bi bi-clock fs-1 opacity-50"></i>
                     </div>
@@ -55,14 +56,60 @@
         </div>
     </div>
 
-    <div class="card shadow-sm">
-        <div class="card-header bg-white">
-            <h5 class="mb-0">Mes offres de stage</h5>
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-bold">Mes offres de stage</h5>
         </div>
-        <div class="card-body text-center py-5">
-            <i class="bi bi-folder2-open display-1 text-muted mb-3"></i>
-            <p class="text-muted">Vous n'avez pas encore publié d'offre.</p>
-            <button class="btn btn-outline-primary">Publier ma première offre</button>
+        <div class="card-body">
+            
+            {% if offres %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Titre</th>
+                                <th>Date de publication</th>
+                                <th>Candidats</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for offre in offres %}
+                            <tr>
+                                <td class="fw-bold">{{ offre.titre }}</td>
+                                <td>{{ offre.date_publication|date:"d M Y" }}</td>
+                                <td>
+                                    <span class="badge bg-info text-dark">
+                                        {{ offre.candidature_set.count }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{% url 'voir_offre' offre.id %}" class="btn btn-sm btn-outline-primary me-1">
+                                        <i class="bi bi-eye"></i> Voir
+                                    </a>
+                                    
+                                    <a href="{% url 'supprimer_offre' offre.id %}" 
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer l\'offre &quot;{{ offre.titre }}&quot; ?');">
+                                        <i class="bi bi-trash"></i> Supprimer
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-folder2-open display-1 text-muted mb-3"></i>
+                    <p class="text-muted">Vous n'avez pas encore publié d'offre.</p>
+                    <a href="{% url 'creer_offre' %}" class="btn btn-outline-primary mt-2">
+                        Publier ma première offre
+                    </a>
+                </div>
+            {% endif %}
+            
         </div>
     </div>
 </div>

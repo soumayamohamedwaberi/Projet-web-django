@@ -85,5 +85,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirection après connexion réussie (vers la liste des offres)
 LOGIN_REDIRECT_URL = 'dispatch_login'
-# Redirection après déconnexion (vers la page d'accueil/liste des offres)
-LOGOUT_REDIRECT_URL = 'liste_offres'
+# Redirection après déconnexion (vers la page d'accueil)
+LOGOUT_REDIRECT_URL = 'accueil'

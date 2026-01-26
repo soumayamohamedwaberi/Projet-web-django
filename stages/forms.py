@@ -1,9 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Candidature  # On a besoin d'importer le modèle Candidature
+# 👇 C'EST ICI LA CORRECTION : On importe bien OffreStage et Candidature
+from .models import Candidature, OffreStage 
 
 # ============================================================
-# 1. FORMULAIRE DE CANDIDATURE (C'est celui qui manquait !)
+# 1. FORMULAIRE DE CANDIDATURE (Pour les étudiants)
 # ============================================================
 class CandidatureForm(forms.ModelForm):
     class Meta:
@@ -29,7 +30,6 @@ class StudentRegistrationForm(forms.ModelForm):
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(label="Confirmer le mot de passe", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     
-    # Champs supplémentaires
     telephone = forms.CharField(label="Téléphone", required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     niveau = forms.CharField(label="Niveau d'études", required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     specialite = forms.CharField(label="Spécialité", required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -55,7 +55,6 @@ class CompanyRegistrationForm(forms.ModelForm):
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     confirm_password = forms.CharField(label="Confirmer le mot de passe", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
-    # Champs spécifiques
     nom_entreprise = forms.CharField(label="Nom de l'entreprise", widget=forms.TextInput(attrs={'class': 'form-control'}))
     secteur = forms.CharField(label="Secteur d'activité", widget=forms.TextInput(attrs={'class': 'form-control'}))
     adresse = forms.CharField(label="Adresse", widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
@@ -73,3 +72,15 @@ class CompanyRegistrationForm(forms.ModelForm):
         if password and confirm_password and password != confirm_password:
             raise forms.ValidationError("Les mots de passe ne correspondent pas.")
         return cleaned_data
+
+# ============================================================
+# 4. FORMULAIRE CRÉATION OFFRE (Pour les entreprises)
+# ============================================================
+class OffreForm(forms.ModelForm):
+    class Meta:
+        model = OffreStage
+        fields = ['titre', 'description']
+        widgets = {
+            'titre': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+        }
